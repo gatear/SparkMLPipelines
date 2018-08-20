@@ -71,7 +71,8 @@ val encoder = udf[Double,Double] {
   }
   
 ```  
-> With UDF you can obtain more complex transformations, while still respecting the pipeline like structure
+> With UDFs and '.withColumn(...)' you can obtain the same result and that's to be expected because Transformers
+use the same technique internally.
 
 ```Scala
 val labeledDF = df.withColumn("Label", encoder( $"Rating" ))
