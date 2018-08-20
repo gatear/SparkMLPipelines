@@ -62,7 +62,7 @@ scala> bin.transform(df).show()
 |    Wedding Crashers|   7.0|  1.0|
 +--------------------+------+-----+
 
-/ **Though we can obtain the same result with UDFs ( User Defined Functions )**/
+/**Though we can obtain the same result with UDFs ( User Defined Functions )**/
 
 val encoder = udf[Double,Double] { 
   case num if num > 7d => 2d
