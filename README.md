@@ -8,7 +8,7 @@
 > Note: A **Machine Learning** pipeline is a sequence of dataset transformations and each transformation takes an input dataset and outputs the transformed dataset.  
 
 
-1. **Creating an appropiate DataFrame**
+1. **Creating an appropiate DataFrame :**
 
 ```Scala
 
@@ -26,10 +26,10 @@ val movies = Seq( ("The Godfather", 9.2d),
                   ("I Love You, Man", 7d),
                   ("Wedding Crashers", 7d) )
                   
-val df = movies.toDF("Name","Rating")     
+val df = movies.toDF("Name","Rating")      :
 
 ```    
-2. **Creating the neccesary Transformers for the ML Pipeline  
+2. **A simple Transformer :** 
 
 ```Scala
                   
@@ -70,9 +70,26 @@ val encoder = udf[Double,Double] {
   case num: Double => 0d 
   }
   
-```  
-> With UDFs and '.withColumn(...)' you can obtain the same result and that's to be expected because Transformers
-use the same technique internally.
+```
+3. **Chaining Transformers into a ML Pipeline**
+
+```Scala
+
+/** Configure pipeline stages  **/
+val binTF = Binarizer(inputCol="Rating", outputCol="Group", threshold= 5d) 
+val hasTF = HashingTF(inputCol="Group", outputCol="Count", numFeatures=200) 
+val vasTF = VectorAssembler( inputCols=Array("Rating","Group"), outputCol="Features")
+
+val lr = LogisticRegression(maxIter=10, regParam=0.01) 
+
+val pipeline = Pipeline( binTF::hasTF::vasTF::lr::Nil ) 
+
+/**Now we can obtain an Estimator**/
+
+```
+  
+> With UDFs and 'withColumn(...)' you can obtain the same result. 
+> That's to be expected because Transformers use the same technique internally.
 
 ```Scala
 val labeledDF = df.withColumn("Label", encoder( $"Rating" ))
