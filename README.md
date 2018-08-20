@@ -28,10 +28,10 @@ val movies = Seq( ("The Godfather", 9.2d),
                   
 val df = movies.toDF("Name","Rating")     
 
-```  
-2. **Creating the neccesary Transformers for the ML Pipeline
+```    
+2. **Creating the neccesary Transformers for the ML Pipeline  
 
-```
+```Scala
                   
 import org.apache.spark.ml.feature.Binarizer
 
@@ -70,10 +70,10 @@ val encoder = udf[Double,Double] {
   case num: Double => 0d 
   }
   
-```
+```  
 > With UDF you can obtain more complex transformations, while still respecting the pipeline like structure
 
-```
+```Scala
 val labeledDF = df.withColumn("Label", encoder( $"Rating" ))
 
 scala> labeledDF.show
