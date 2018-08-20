@@ -1,7 +1,7 @@
 ## SparkMLPipelines
 
- ---------------------------------------------------
-  A series of examples to showoff **ML pipelines**  
+
+ A series of examples to showoff **ML pipelines**  
  ---------------------------------------------------
  
  
